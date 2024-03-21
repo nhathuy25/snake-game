@@ -49,6 +49,9 @@ class Jeu
 
     // Modifie la direction
     void setDirection(Direction);
+
+    void ajoutMur();
+    void suppressionMur();
 };
 
 #endif

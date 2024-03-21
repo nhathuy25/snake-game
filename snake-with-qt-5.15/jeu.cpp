@@ -182,3 +182,27 @@ void Jeu::setDirection(Direction dir)
 {
     dirSnake = dir;
 }
+
+void Jeu::ajoutMur()
+{
+    Position posMur;
+
+    // Trouve une case libre
+    do {
+        posMur.x = rand()%largeur;
+        posMur.y = rand()%hauteur;
+    } while (!posValide(posMur));
+    terrain[posMur.y*largeur+posMur.x]=MUR;
+}
+
+void Jeu::suppressionMur()
+{
+    Position posMur;
+
+    // Trouve un mur
+    do {
+        posMur.x = rand()%largeur;
+        posMur.y = rand()%hauteur;
+    } while (terrain[posMur.y*largeur+posMur.x]!=MUR);
+    terrain[posMur.y*largeur+posMur.x]=VIDE;
+}

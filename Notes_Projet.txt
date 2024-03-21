@@ -1,0 +1,17 @@
+# Note Projet OOP Cpp
+
+To-do list
+- apparaition aleatoire de fruites
+- collision avec les murs
+- gestion de la fin du niveau
+- plusieurs serpents (remplacer le serpent existant par un serpent qui est plus aesthetique)
+- plusieurs niveaux (5 niveaus)
+- changement de jeu.. (plus dur!)
+
+### 11/3/2024
+
+
+Q:
+- Possible d'ajouter la queue de serpent? Dans ce cas, la shape du corps n'est pas rond mais il est un rectangle
+
+- 
