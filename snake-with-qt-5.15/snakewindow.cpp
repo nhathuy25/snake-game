@@ -32,16 +32,20 @@ SnakeWindow::SnakeWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent
     connect(timer, &QTimer::timeout, this, &SnakeWindow::handleTimer);
     timer->start(100);
 
+    // Adding button to randomly put a wall
     SnakeButton *btnAjout = new SnakeButton(this);
     btnAjout->setFixedSize(100, 25);
     btnAjout->setText("Ajout mur");
     btnAjout->move(10, 10);
 
+    // Adding button to randomly remove a wall
     SnakeButton *btnSuppr = new SnakeButton(this);
     btnSuppr->setFixedSize(100, 25);
     btnSuppr->setText("Suppr mur");
     btnSuppr->move(120, 10);
 
+
+    // Connect existing buttons with it's functions
     connect(btnAjout, &QPushButton::clicked, this, &SnakeWindow::handleButtonAjout);
     connect(btnSuppr, &QPushButton::clicked, this, &SnakeWindow::handleButtonSuppr);
 
@@ -55,9 +59,9 @@ SnakeWindow::SnakeWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent
 void SnakeWindow::paintEvent(QPaintEvent *)
 {
     QPainter painter(this);
-    
+
     Position pos;
-    
+
     // Taille des cases en pixels
     int largeurCase, hauteurCase;
 
