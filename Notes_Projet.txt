@@ -15,3 +15,21 @@ Q:
 - Possible d'ajouter la queue de serpent? Dans ce cas, la shape du corps n'est pas rond mais il est un rectangle
 
 - 
+
+## Tasks 21/3/2024
+
+### Apparaition aleratoire de fruites:
+- Create fruits image source (done)
+- Create methods to appear the fruit: fruit appear one after another.
+	+ Initialize the fruit
+	+ Method to eat the fruit
+	+ Verify if the fruit is eaten or not
+	+ Then appear another fruit
+
+- Randomize the fruits (multiples fruit colors) 
+- Increase the size of the snake when eat the fruit
+
+Notion:
+snake: is a list of positions (one after another) of the snake's body. 
+	The body is all depend from the position of the head (the first part of the body is the last position of the head)
+	

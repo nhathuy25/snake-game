@@ -11,10 +11,13 @@ class SnakeWindow : public QFrame
     Jeu jeu;
     QPixmap pixmapCorps, pixmapTete, pixmapMur;
     int decalageY;
-    
+
+    // Fruits pixmap: 4 differents fruits
+    QPixmap pixmapFruite[4];
+
   public:
     SnakeWindow(QWidget *pParent=nullptr, Qt::WindowFlags flags=Qt::WindowFlags());
-    
+
   protected:
     void paintEvent(QPaintEvent *);
     void keyPressEvent(QKeyEvent *);

@@ -26,6 +26,32 @@ SnakeWindow::SnakeWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent
         exit(-1);
     }
 
+    // Adding pixmap for fruits
+    if (pixmapFruite[0].load("./data/fruite1.png")==false)
+    {
+        cout<<"Impossible d'ouvrir fruite1.png"<<endl;
+        exit(-1);
+    }
+
+    if (pixmapFruite[1].load("./data/fruite2.png")==false)
+    {
+        cout<<"Impossible d'ouvrir fruite2.png"<<endl;
+        exit(-1);
+    }
+
+    if (pixmapFruite[2].load("./data/fruite3.png")==false)
+    {
+        cout<<"Impossible d'ouvrir fruite3.png"<<endl;
+        exit(-1);
+    }
+
+    if (pixmapFruite[3].load("./data/fruite4.png")==false)
+    {
+        cout<<"Impossible d'ouvrir fruite4.png"<<endl;
+        exit(-1);
+    }
+
+    // Initializing the game
     jeu.init();
 
     QTimer *timer = new QTimer(this);
@@ -44,7 +70,6 @@ SnakeWindow::SnakeWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent
     btnSuppr->setText("Suppr mur");
     btnSuppr->move(120, 10);
 
-
     // Connect existing buttons with it's functions
     connect(btnAjout, &QPushButton::clicked, this, &SnakeWindow::handleButtonAjout);
     connect(btnSuppr, &QPushButton::clicked, this, &SnakeWindow::handleButtonSuppr);
@@ -52,6 +77,7 @@ SnakeWindow::SnakeWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent
     largeurCase = pixmapMur.width();
     hauteurCase = pixmapMur.height();
 
+    // Resize the gaming zone to add buttons on top:
     decalageY = 50;
     resize(jeu.getNbCasesX()*largeurCase, jeu.getNbCasesY()*hauteurCase+decalageY);
 }
@@ -85,6 +111,13 @@ void SnakeWindow::paintEvent(QPaintEvent *)
         for (itSnake=++snake.begin(); itSnake!=snake.end(); itSnake++)
             painter.drawPixmap(itSnake->x*largeurCase, itSnake->y*hauteurCase+decalageY, pixmapCorps);
     }
+
+    // Dessin le fruite
+    // - randomize the fruite pixmap:
+    int nbRandomFruite = jeu.nbRandomFruite;
+    Position posFruite = jeu.getFruite();
+    painter.drawPixmap(posFruite.x*largeurCase, posFruite.y*largeurCase+decalageY, pixmapFruite[nbRandomFruite]);
+
 }
 
 void SnakeWindow::keyPressEvent(QKeyEvent *event)

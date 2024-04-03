@@ -1,7 +1,8 @@
 #ifndef JEU_HPP
 #define JEU_HPP
 
-#include <list>
+#include<list>
+
 
 typedef enum {VIDE, MUR} Case;
 typedef enum {GAUCHE, DROITE, HAUT, BAS} Direction;
@@ -23,7 +24,8 @@ class Jeu
     int largeur, hauteur; // Nombre de cases en largeur et en hauteur
     std::list<Position> snake;
     Direction dirSnake;
-    
+    Position fruite;
+
   public:
     Jeu();
     Jeu(const Jeu &);
@@ -50,8 +52,21 @@ class Jeu
     // Modifie la direction
     void setDirection(Direction);
 
+    // Add and remove walls
     void ajoutMur();
     void suppressionMur();
+
+    // ** FRUITS **
+    //
+    const Position &getFruite() const;
+    Position genererRandomPosFruite();
+
+    int nbRandomFruite = 0;
+
+    // Function to increase the size of snake
+    void grandirSnake();
+
+
 };
 
 #endif
