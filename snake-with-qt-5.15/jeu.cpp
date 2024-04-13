@@ -76,6 +76,8 @@ Jeu &Jeu::operator=(const Jeu &jeu)
 
 bool Jeu::init()
 {
+    score = 0;
+
 	int x, y;
 	// list<Position>::iterator itSnake;
 
@@ -170,6 +172,9 @@ void Jeu::evolue()
         // - increase the size of the snake by one
         grandirSnake();
 
+        // - increase score by one
+        score++;
+
         delete newPosFruite;
     }
 
@@ -253,35 +258,6 @@ const Position &Jeu::getFruite() const
     return fruite;
 }
 
-
-Position Jeu::genererRandomPosFruite()
-{
-    Position current_pos = fruite;
-    Position posFruite;
-
-    do{
-        posFruite.x = rand()%largeur;
-        posFruite.y = rand()%hauteur;
-
-    }while(!posValide(posFruite) || posFruite==current_pos);
-    return posFruite;
-}
-
-void Jeu::grandirSnake()
-{
-    Position* posQueue = new Position;
-    *posQueue = snake.back();
-
-    int depX[] = {-1, 1, 0, 0};
-    int depY[] = {0, 0, -1, 1};
-
-    // Adding the tail of the snake base on the inverse of the movement direction
-    posQueue->x -= depX[dirSnake];
-    posQueue->y -= depY[dirSnake];
-
-    snake.push_back(*posQueue);
-    delete posQueue;
-}
 /*
 bool Jeu::collision()
 {
@@ -341,3 +317,34 @@ Position Jeu::seBalader()
     return posTete;
 }
 
+
+
+Position Jeu::genererRandomPosFruite()
+{
+    Position current_pos = fruite;
+    Position posFruite;
+
+    do{
+        posFruite.x = rand()%largeur;
+        posFruite.y = rand()%hauteur;
+
+    }while(!posValide(posFruite) || posFruite==current_pos);
+    return posFruite;
+}
+
+void Jeu::grandirSnake()
+{
+    Position* posQueue = new Position;
+    *posQueue = snake.back();
+
+    int depX[] = {-1, 1, 0, 0};
+    int depY[] = {0, 0, -1, 1};
+
+    // Adding the tail of the snake base on the inverse of the movement direction
+    posQueue->x -= depX[dirSnake];
+    posQueue->y -= depY[dirSnake];
+    posQueue->y -= depY[dirSnake];
+
+    snake.push_back(*posQueue);
+    delete posQueue;
+}

@@ -57,21 +57,28 @@ class Jeu
     void ajoutMur();
     void suppressionMur();
 
-    // ** FRUITS **
-    //
-    const Position &getFruite() const;
-    Position genererRandomPosFruite();
-
-    int nbRandomFruite = 0;
-
-    // Function to increase the size of snake
-    void grandirSnake();
-
     // Function to verify is there a collision:
     void collision();
 
     //Rewrite function for snake mouvement
     Position seBalader();
+
+    // ** FRUITS **
+    //
+    const Position &getFruite() const;
+    Position genererRandomPosFruite();
+
+    // Index to randomize the fruit pixmap [from 1 to 4]
+    int nbRandomFruite = 0;
+
+    // Function to increase the size of snake
+    void grandirSnake();
+
+    // ** SCORE **
+    int score;
+
+
+
 
 };
 

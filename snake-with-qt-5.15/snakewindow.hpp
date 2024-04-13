@@ -15,6 +15,9 @@ class SnakeWindow : public QFrame
     // Fruits pixmap: 4 differents fruits
     QPixmap pixmapFruite[4];
 
+    // Score label:
+    QLabel *scoreLabel = new QLabel(this);
+
   public:
     SnakeWindow(QWidget *pParent=nullptr, Qt::WindowFlags flags=Qt::WindowFlags());
 
@@ -24,7 +27,7 @@ class SnakeWindow : public QFrame
     void handleTimer();
     void handleButtonAjout();
     void handleButtonSuppr();
-
+    void handleScoreLabel();
 
 };
 
@@ -40,5 +43,6 @@ class SnakeButton : public QPushButton
             QCoreApplication::sendEvent(parent(), e);
     }
 };
+
 
 #endif

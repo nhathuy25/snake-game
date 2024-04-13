@@ -62,13 +62,13 @@ SnakeWindow::SnakeWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent
     SnakeButton *btnAjout = new SnakeButton(this);
     btnAjout->setFixedSize(100, 25);
     btnAjout->setText("Ajout mur");
-    btnAjout->move(10, 10);
+    btnAjout->move(300, 10);
 
     // Adding button to randomly remove a wall
     SnakeButton *btnSuppr = new SnakeButton(this);
     btnSuppr->setFixedSize(100, 25);
     btnSuppr->setText("Suppr mur");
-    btnSuppr->move(120, 10);
+    btnSuppr->move(430, 10);
 
     // Connect existing buttons with it's functions
     connect(btnAjout, &QPushButton::clicked, this, &SnakeWindow::handleButtonAjout);
@@ -80,6 +80,17 @@ SnakeWindow::SnakeWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent
     // Resize the gaming zone to add buttons on top:
     decalageY = 50;
     resize(jeu.getNbCasesX()*largeurCase, jeu.getNbCasesY()*hauteurCase+decalageY);
+
+
+    //------ Score label
+    scoreLabel->setText("Score: " + QString::number(01));
+    scoreLabel->setMargin(12);
+    // Setting font's properties for label
+    QFont font = scoreLabel->font();
+    font.setPointSize(14);
+    scoreLabel->setFont(font);
+
+    connect(timer, &QTimer::timeout, this, &SnakeWindow::handleScoreLabel);
 }
 
 void SnakeWindow::paintEvent(QPaintEvent *)
@@ -150,3 +161,11 @@ void SnakeWindow::handleButtonSuppr()
     jeu.suppressionMur();
     update();
 }
+
+void SnakeWindow::handleScoreLabel()
+{
+    scoreLabel->setText("Score: " + QString::number(jeu.score));
+    update();
+}
+
+
