@@ -51,6 +51,7 @@ class Jeu
 
     // Modifie la direction
     void setDirection(Direction);
+    const Direction getDirection() const;
 
     // Add and remove walls
     void ajoutMur();
@@ -66,6 +67,11 @@ class Jeu
     // Function to increase the size of snake
     void grandirSnake();
 
+    // Function to verify is there a collision:
+    void collision();
+
+    //Rewrite function for snake mouvement
+    Position seBalader();
 
 };
 

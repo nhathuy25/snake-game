@@ -33,3 +33,13 @@ Notion:
 snake: is a list of positions (one after another) of the snake's body. 
 	The body is all depend from the position of the head (the first part of the body is the last position of the head)
 	
+
+### Update 3/4
+Generate the fruit, by checking it position in jeu.evolue() and update the pixmap in SnakeWindow
+Adding condition to the getRandomPosFruite: check if the new position is interfere with the snake body
+Randomize the fruit pixmap
+
+### Update 12/4
+Re-initialize the game if collision and display a Gameover message.
+
+

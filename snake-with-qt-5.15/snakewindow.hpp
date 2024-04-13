@@ -24,6 +24,8 @@ class SnakeWindow : public QFrame
     void handleTimer();
     void handleButtonAjout();
     void handleButtonSuppr();
+
+
 };
 
 class SnakeButton : public QPushButton

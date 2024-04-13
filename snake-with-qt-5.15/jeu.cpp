@@ -111,6 +111,7 @@ bool Jeu::init()
                 terrain[y*largeur+x] = VIDE;
 
     //Initialize the snake:
+    dirSnake = DROITE;
     int longueurSerpent = 5;
     snake.clear();
 
@@ -138,19 +139,21 @@ bool Jeu::init()
 //Evolution of the game: Base on the change of the position of the snake. We
 void Jeu::evolue()
 {
-    Position posTest;
 	list<Position>::iterator itSnake;
 
-    int depX[] = {-1, 1, 0, 0};
-    int depY[] = {0, 0, -1, 1};
+    //
+    Position posTest = seBalader();
 
-    posTest.x = snake.front().x + depX[dirSnake];
-    posTest.y = snake.front().y + depY[dirSnake];
-
-    if (posValide(posTest))
+    if(posValide(posTest))
     {
         snake.pop_back();
         snake.push_front(posTest);
+    }
+    //else : collision happens
+    else
+    {
+        cout << "Collision!" << endl;
+        //this->init();
     }
 
     // If the snake eats the fruit:
@@ -161,15 +164,17 @@ void Jeu::evolue()
         *newPosFruite = genererRandomPosFruite();
         fruite = *newPosFruite;
 
-        // Generate a random index number for the fruit pixmap
+        // - generate a random index number for the new fruit pixmap
         nbRandomFruite = rand()%4;
 
         // - increase the size of the snake by one
         grandirSnake();
 
-
         delete newPosFruite;
     }
+
+    // Collision detect
+    //collision();
 }
 
 int Jeu::getNbCasesX() const
@@ -211,6 +216,11 @@ bool Jeu::posValide(const Position &pos) const
 void Jeu::setDirection(Direction dir)
 {
     dirSnake = dir;
+}
+
+const Direction Jeu::getDirection() const
+{
+    return dirSnake;
 }
 
 void Jeu::ajoutMur()
@@ -259,15 +269,75 @@ Position Jeu::genererRandomPosFruite()
 
 void Jeu::grandirSnake()
 {
-    Position posQueue = snake.back();
+    Position* posQueue = new Position;
+    *posQueue = snake.back();
 
     int depX[] = {-1, 1, 0, 0};
     int depY[] = {0, 0, -1, 1};
 
     // Adding the tail of the snake base on the inverse of the movement direction
-    posQueue.x -= depX[dirSnake];
-    posQueue.y -= depY[dirSnake];
+    posQueue->x -= depX[dirSnake];
+    posQueue->y -= depY[dirSnake];
 
-    snake.push_back(posQueue);
+    snake.push_back(*posQueue);
+    delete posQueue;
+}
+/*
+bool Jeu::collision()
+{
+    // Initialize direction-depended variables
+    int depX[] = {-1, 1, 0, 0};
+    int depY[] = {0, 0, -1, 1};
+
+    Position* posProchaine = new Position;
+    posProchaine->x = snake.front().x + depX[dirSnake];
+    posProchaine->y = snake.front().y + depY[dirSnake];
+
+    if(!posValide(*posProchaine)){
+        delete posProchaine;
+        return true;
+    }
+
+    delete posProchaine;
+    return false;
+}
+*/
+
+void Jeu::collision(){
+    ;
+}
+
+// Function seBalader: to implement the movement of the snake in the game zone:
+// - if the snake is out of the game zone, set its head to other side of the map.
+// - if not than move the head base on the direction of mouvement
+Position Jeu::seBalader()
+{
+    Position posTete;
+    int depX[] = {-1, 1, 0, 0};
+    int depY[] = {0, 0, -1, 1};
+
+    // If the snake is moving out of the game zone:
+    if(snake.front().x==0 && dirSnake==0){
+        posTete.x = largeur-1;
+        posTete.y = snake.front().y;
+    }
+    else if(snake.front().x==largeur-1 && dirSnake==1){
+        posTete.x = 0;
+        posTete.y = snake.front().y;
+    }
+    else if(snake.front().y==0 && dirSnake==2){
+        posTete.x = snake.front().x;
+        posTete.y = hauteur-1;
+    }
+    else if(snake.front().y==hauteur-1 && dirSnake==3){
+        posTete.x = snake.front().x;
+        posTete.y = 0;
+    }
+    // Else if the snake is still in the game zone, move base on the direction of the snake.
+    else{
+        posTete.x = snake.front().x + depX[dirSnake];
+        posTete.y = snake.front().y + depY[dirSnake];
+    }
+    return posTete;
 }
 

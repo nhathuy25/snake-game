@@ -56,7 +56,7 @@ SnakeWindow::SnakeWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent
 
     QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &SnakeWindow::handleTimer);
-    timer->start(100);
+    timer->start(150);
 
     // Adding button to randomly put a wall
     SnakeButton *btnAjout = new SnakeButton(this);
@@ -113,7 +113,7 @@ void SnakeWindow::paintEvent(QPaintEvent *)
     }
 
     // Dessin le fruite
-    // - randomize the fruite pixmap:
+    // - randomize the fruit pixmap:
     int nbRandomFruite = jeu.nbRandomFruite;
     Position posFruite = jeu.getFruite();
     painter.drawPixmap(posFruite.x*largeurCase, posFruite.y*largeurCase+decalageY, pixmapFruite[nbRandomFruite]);
@@ -122,13 +122,13 @@ void SnakeWindow::paintEvent(QPaintEvent *)
 
 void SnakeWindow::keyPressEvent(QKeyEvent *event)
 {
-    if (event->key()==Qt::Key_Left)
+    if (event->key()==Qt::Key_Left && jeu.getDirection()!=DROITE)
         jeu.setDirection(GAUCHE);
-    else if (event->key()==Qt::Key_Right)
+    else if (event->key()==Qt::Key_Right && jeu.getDirection()!=GAUCHE)
         jeu.setDirection(DROITE);
-    else if (event->key()==Qt::Key_Up)
+    else if (event->key()==Qt::Key_Up && jeu.getDirection()!=BAS)
         jeu.setDirection(HAUT);
-    else if (event->key()==Qt::Key_Down)
+    else if (event->key()==Qt::Key_Down && jeu.getDirection()!=HAUT)
         jeu.setDirection(BAS);
     update();
 }
