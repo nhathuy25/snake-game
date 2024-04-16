@@ -12,7 +12,7 @@ class SnakeWindow : public QFrame
     QPixmap pixmapCorps, pixmapTete, pixmapMur;
     int decalageY;
 
-    // Fruits pixmap: 4 differents fruits
+    // Fruits pixmap: 4 different fruits
     QPixmap pixmapFruite[4];
 
     // Score label:
@@ -27,8 +27,11 @@ class SnakeWindow : public QFrame
     void handleTimer();
     void handleButtonAjout();
     void handleButtonSuppr();
+    // Function to display score label by time
     void handleScoreLabel();
 
+    // Function to change between terrain and re-initialize the game afterward
+    void handleButtonChangeTerrain();
 };
 
 class SnakeButton : public QPushButton

@@ -42,4 +42,16 @@ Randomize the fruit pixmap
 ### Update 12/4
 Re-initialize the game if collision and display a Gameover message.
 
+### Update 13/4
+Score label
+
+### Update 14/4
+
+Adding multiple terrains, trouble with changing between terrain.
+
+### Update 16/4
+Finish adding terrains.
+Adding game over display and tap any button to restart the game/
+
+
 

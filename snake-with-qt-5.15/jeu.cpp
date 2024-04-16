@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cassert>
 #include "jeu.hpp"
+#include <vector>
+
 
 using namespace std;
 
@@ -29,19 +31,27 @@ Jeu::Jeu()
     terrain = nullptr;
     largeur = 0; hauteur = 0;
     dirSnake = DROITE;
+
+    initListTerrain();
 }
 
 Jeu::Jeu(const Jeu &jeu):snake(jeu.snake)
 {
+
     largeur = jeu.largeur;
     hauteur = jeu.hauteur;
     dirSnake = jeu.dirSnake;
 
+
     if (jeu.terrain!=nullptr)
     {
-        terrain = new Case[largeur*hauteur];
-        for (int c=0; c<largeur*hauteur; c++)
-            terrain[c] = jeu.terrain[c];
+        terrains = new Case*[nb_terrains];
+        for(int i=0;i<nb_terrains;i++)
+            {
+            terrains[i] = new Case[largeur*hauteur];
+            for (int c=0; c<largeur*hauteur; c++)
+                terrains[i][c] = jeu.terrains[i][c];
+            }
     }
     else
         terrain = nullptr;
@@ -51,6 +61,13 @@ Jeu::~Jeu()
 {
     if (terrain!=nullptr)
         delete[] terrain;
+
+    if (terrains!=nullptr)
+    {
+        for(int i=0;i<nb_terrains;i++)
+            delete[] terrains[i];
+    delete[] terrains;
+    }
 }
 
 Jeu &Jeu::operator=(const Jeu &jeu)
@@ -65,9 +82,13 @@ Jeu &Jeu::operator=(const Jeu &jeu)
 
     if (jeu.terrain!=nullptr)
     {
-        terrain = new Case[largeur*hauteur];
-        for (int c=0; c<largeur*hauteur; c++)
-            terrain[c] = jeu.terrain[c];
+        terrains = new Case*[nb_terrains];
+        for(int i=0;i<nb_terrains;i++)
+            {
+            terrains[i] = new Case[largeur*hauteur];
+            for (int c=0; c<largeur*hauteur; c++)
+                terrains[i][c] = jeu.terrains[i][c];
+            }
     }
     else
         terrain = nullptr;
@@ -78,39 +99,26 @@ bool Jeu::init()
 {
     score = 0;
 
-	int x, y;
+	//int x, y;
 	// list<Position>::iterator itSnake;
 
 	//Initialize the playing zone
-	const char terrain_defaut[15][21] = {
-		"####..##############",
-		"#........##........#",
-		"#.#####..##...####.#",
-		"#........##........#",
-		"#..................#",
-		"#..................#",
-		"....................",
-		"....................",
-		"....................",
-		"....................",
-		"#..................#",
-		"#..................#",
-		"#.....#......#.....#",
-		"#.....#......#.....#",
-        "####..##############"
-    };
-
 	largeur = 20;
 	hauteur = 15;
 
 	terrain = new Case[largeur*hauteur];
 
+    /*
 	for(y=0;y<hauteur;++y)
 		for(x=0;x<largeur;++x)
             if (terrain_defaut[y][x]=='#')
                 terrain[y*largeur+x] = MUR;
             else
                 terrain[y*largeur+x] = VIDE;
+    */
+
+    for(int i=0;i<(hauteur*largeur);i++)
+        terrain[i] = (terrains[id_terrain][i]);
 
     //Initialize the snake:
     dirSnake = DROITE;
@@ -155,7 +163,7 @@ void Jeu::evolue()
     else
     {
         cout << "Collision!" << endl;
-        //this->init();
+        this->init();
     }
 
     // If the snake eats the fruit:
@@ -317,8 +325,6 @@ Position Jeu::seBalader()
     return posTete;
 }
 
-
-
 Position Jeu::genererRandomPosFruite()
 {
     Position current_pos = fruite;
@@ -343,8 +349,135 @@ void Jeu::grandirSnake()
     // Adding the tail of the snake base on the inverse of the movement direction
     posQueue->x -= depX[dirSnake];
     posQueue->y -= depY[dirSnake];
-    posQueue->y -= depY[dirSnake];
+   // posQueue->y -= depY[dirSnake];
 
     snake.push_back(*posQueue);
     delete posQueue;
 }
+
+void Jeu::initListTerrain()
+{
+    int nb_terrains = 5;
+    int largeur = 20;
+    int hauteur = 15;
+
+    // Set up a terrains variables to stack all the terrain with it's index.
+    terrains = new Case*[nb_terrains];
+    for (int i = 0; i < nb_terrains; ++i) {
+        terrains[i] = new Case[largeur*hauteur];
+    }
+
+	const char terrain_defaut[15][21] = {
+		"####..##############",
+		"#........##........#",
+		"#.#####..##...####.#",
+		"#........##........#",
+		"#..................#",
+		"#..................#",
+		"....................",
+		"....................",
+		"....................",
+		"....................",
+		"#..................#",
+		"#..................#",
+		"#.....#......#.....#",
+		"#.....#......#.....#",
+        "####..##############"
+    };
+
+    const char terrain1[15][21] = {
+		"####..##############",
+		"#........##........#",
+		"#.#####..##...####.#",
+		"#........##........#",
+		"#..................#",
+		"#..................#",
+		"....................",
+		"........####........",
+		"....................",
+		"....................",
+		"#..................#",
+		"#..................#",
+		"#.....#......#.....#",
+		"#.....#......#.....#",
+        "####..##############"
+    };
+
+    const char terrain2[15][21] = {
+		"####..##############",
+		"#........##........#",
+		"#.#####..##...####.#",
+		"#........##........#",
+		"#..................#",
+		"#..................#",
+		"....................",
+		"....................",
+		"....................",
+		"....................",
+		"#........##........#",
+		"#..................#",
+		"#.....#......#.....#",
+		"#.....#......#.....#",
+        "####..##############"
+    };
+
+    const char terrain3[15][21] = {
+		"####..##############",
+		"#........##........#",
+		"#.#####..##.######.#",
+		"#........##........#",
+		"#..................#",
+		"#..................#",
+		"....................",
+		"....................",
+		"....................",
+		"....................",
+		"#..................#",
+		"#..................#",
+		"#.....#......#.....#",
+		"#.....#......#.....#",
+        "####..##############"
+    };
+
+    const char terrain4[15][21] = {
+		"####..##############",
+		"#........##........#",
+		"#.#####..##...####.#",
+		"#........##........#",
+		"#..................#",
+		"#..................#",
+		"....................",
+		"....................",
+		"....................",
+		"....................",
+		"#.....#............#",
+		"#.....#............#",
+		"#.....#......#.....#",
+		"#.....#......#.....#",
+        "####..##############"
+    };
+
+
+    // Create a pointer point to 2D array of 'const char' for terrains
+    ptTerrain[0] = &terrain_defaut;
+    ptTerrain[1] = &terrain1;
+    ptTerrain[2] = &terrain2;
+    ptTerrain[3] = &terrain3;
+    ptTerrain[4] = &terrain4;
+
+    // Create a loop and assign each terrain to variable 'terrains' type case
+    for(int i=0; i<5; i++){
+     //   const char (*tempTerrain)[15][21] = ptTerrain[i];
+        for(int y=0;y<hauteur;++y)
+        {
+            for(int x=0;x<largeur;++x)
+                if ((*ptTerrain[i])[y][x]=='#')
+                //if((*ptTerrain[i])[y][x]=='#')
+                    terrains[i][y*largeur+x] = MUR;
+                else
+                    terrains[i][y*largeur+x] = VIDE;
+        }
+    }
+
+}
+
