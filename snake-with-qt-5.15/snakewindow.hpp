@@ -37,6 +37,7 @@ class SnakeWindow : public QFrame
     // Function to change between terrain and re-initialize the game afterward
     void handleButtonChangeTerrain();
 
+    // Function to change the speed of the snake.
     void handleButtonChangeSpeed();
 
 

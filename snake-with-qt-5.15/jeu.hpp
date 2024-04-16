@@ -69,8 +69,9 @@ class Jeu
     Position seBalader();
 
     // ** FRUITS ** //
-    //
+    // Function return the position of the current fruit
     const Position &getFruite() const;
+    // Function to generate a random postion for the new fruit
     Position genererRandomPosFruite();
 
     // Index to randomize the fruit pixmap [from 1 to 4]
@@ -93,11 +94,13 @@ class Jeu
     bool gameOver=false;
 
     // ** SNAKE'S SPEED - GESTION DE LA VITESSE ** //
-    std::vector<int> speedSnake = {150, 300, 450, 600};
+    std::vector<int> speedSnake = {150, 100, 75};
     // Iterator to change between speed of the snake
-    std::vector<int>::const_iterator itSpeed = speedSnake.begin();
+    std::vector<int>::const_iterator itSpeed;
 
-    void changeSpeedSnake();
+    // Function to change the speed of snake (by changing the value of timer)
+    // Return integer: interval of timer
+    int changeSpeedSnake();
 };
 
 #endif

@@ -61,13 +61,13 @@ SnakeWindow::SnakeWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent
     SnakeButton *btnAjout = new SnakeButton(this);
     btnAjout->setFixedSize(100, 25);
     btnAjout->setText("Ajout mur");
-    btnAjout->move(200, 10);
+    btnAjout->move(210, 10);
 
     // Adding button to randomly remove a wall
     SnakeButton *btnSuppr = new SnakeButton(this);
     btnSuppr->setFixedSize(100, 25);
     btnSuppr->setText("Suppr mur");
-    btnSuppr->move(325, 10);
+    btnSuppr->move(315, 10);
 
     // Connect existing buttons with it's functions
     connect(btnAjout, &QPushButton::clicked, this, &SnakeWindow::handleButtonAjout);
@@ -82,6 +82,8 @@ SnakeWindow::SnakeWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent
 
 
     //------ Score label ----------
+    // From the first frame, we set the score to be the length of 3 numbers '000' so that
+    // later on, it won't appear the error of missing number's length
     scoreLabel->setText("Score: 000");
     scoreLabel->setMargin(12);
     // Setting font's properties for label
@@ -95,7 +97,7 @@ SnakeWindow::SnakeWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent
     SnakeButton *btnChangeTerrain = new SnakeButton(this);
     btnChangeTerrain->setFixedSize(100,25);
     btnChangeTerrain->setText("Change terrain");
-    btnChangeTerrain->move(450,10);
+    btnChangeTerrain->move(420,10);
 
     // Connect the button to it's active function
     connect(btnChangeTerrain, &QPushButton::clicked, this, &SnakeWindow::handleButtonChangeTerrain);
@@ -105,8 +107,8 @@ SnakeWindow::SnakeWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent
     //------ Changing snake's speed button -------
     SnakeButton *btnChangeSpeed = new SnakeButton(this);
     btnChangeSpeed->setFixedSize(100,25);
-    btnChangeSpeed->setText("Change speed");
-    btnChangeSpeed->move(600,10);
+    btnChangeSpeed->setText("Change vitesse");
+    btnChangeSpeed->move(525,10);
 
     connect(btnChangeSpeed, &QPushButton::clicked, this, &SnakeWindow::handleButtonChangeSpeed);
 
@@ -202,7 +204,8 @@ void SnakeWindow::handleButtonChangeTerrain()
 
 void SnakeWindow::handleButtonChangeSpeed()
 {
-    jeu.changeSpeedSnake();
+    int speed = jeu.changeSpeedSnake();
+    timer->setInterval(speed);
     update();
 }
 
@@ -238,6 +241,7 @@ void SnakeWindow::restartGame()
 {
     jeu.gameOver = false;
     jeu.init();
+    // hide the Game Over label when restarting the game
     displayGameoverMessage();
     timer->start(*jeu.itSpeed);
 }
