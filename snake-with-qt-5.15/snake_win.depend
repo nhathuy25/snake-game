@@ -1,18 +1,19 @@
 # depslib dependency file v1.0
-1713270841 source:d:\insa\4a\semestre 2\pooa\projet\snake-with-qt-5.15\jeu.cpp
+1713287778 source:d:\insa\4a\semestre 2\pooa\projet\snake-with-qt-5.15\jeu.cpp
 	<iostream>
 	<cassert>
 	"jeu.hpp"
 	<vector>
 
-1713270594 d:\insa\4a\semestre 2\pooa\projet\snake-with-qt-5.15\jeu.hpp
+1713287873 d:\insa\4a\semestre 2\pooa\projet\snake-with-qt-5.15\jeu.hpp
 	<list>
+	<vector>
 
 1711009556 source:d:\insa\4a\semestre 2\pooa\projet\snake-with-qt-5.15\main.cpp
 	<ctime>
 	"snakewindow.hpp"
 
-1713271831 d:\insa\4a\semestre 2\pooa\projet\snake-with-qt-5.15\snakewindow.hpp
+1713287721 d:\insa\4a\semestre 2\pooa\projet\snake-with-qt-5.15\snakewindow.hpp
 	<QtCore/QtCore>
 	<QtWidgets/QtWidgets>
 	"jeu.hpp"
@@ -4265,7 +4266,7 @@
 
 1636486136 d:\insa\4a\semestre 2\pooa\projet\qtbase-small-5.15.2-x64\include\qtwidgets\qtwidgetsversion.h
 
-1713270594 source:d:\insa\4a\semestre 2\pooa\projet\snake-with-qt-5.15\snakewindow.cpp
+1713287851 source:d:\insa\4a\semestre 2\pooa\projet\snake-with-qt-5.15\snakewindow.cpp
 	<iostream>
 	"snakewindow.hpp"
 

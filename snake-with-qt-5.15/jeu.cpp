@@ -98,6 +98,7 @@ Jeu &Jeu::operator=(const Jeu &jeu)
 bool Jeu::init()
 {
     score = 0;
+    gameOver = false;
 
 	//int x, y;
 	// list<Position>::iterator itSnake;
@@ -163,7 +164,7 @@ void Jeu::evolue()
     else
     {
         cout << "Collision!" << endl;
-        this->init();
+        gameOver = true;
     }
 
     // If the snake eats the fruit:
@@ -266,31 +267,6 @@ const Position &Jeu::getFruite() const
     return fruite;
 }
 
-/*
-bool Jeu::collision()
-{
-    // Initialize direction-depended variables
-    int depX[] = {-1, 1, 0, 0};
-    int depY[] = {0, 0, -1, 1};
-
-    Position* posProchaine = new Position;
-    posProchaine->x = snake.front().x + depX[dirSnake];
-    posProchaine->y = snake.front().y + depY[dirSnake];
-
-    if(!posValide(*posProchaine)){
-        delete posProchaine;
-        return true;
-    }
-
-    delete posProchaine;
-    return false;
-}
-*/
-
-void Jeu::collision(){
-    ;
-}
-
 // Function seBalader: to implement the movement of the snake in the game zone:
 // - if the snake is out of the game zone, set its head to other side of the map.
 // - if not than move the head base on the direction of mouvement
@@ -349,7 +325,6 @@ void Jeu::grandirSnake()
     // Adding the tail of the snake base on the inverse of the movement direction
     posQueue->x -= depX[dirSnake];
     posQueue->y -= depY[dirSnake];
-   // posQueue->y -= depY[dirSnake];
 
     snake.push_back(*posQueue);
     delete posQueue;
@@ -386,39 +361,39 @@ void Jeu::initListTerrain()
     };
 
     const char terrain1[15][21] = {
-		"####..##############",
-		"#........##........#",
-		"#.#####..##...####.#",
-		"#........##........#",
-		"#..................#",
-		"#..................#",
-		"....................",
-		"........####........",
+        "....................",
 		"....................",
 		"....................",
-		"#..................#",
-		"#..................#",
-		"#.....#......#.....#",
-		"#.....#......#.....#",
-        "####..##############"
+		"..###.###.###..#....",
+		"...#..#.#.#...#.#...",
+		"...#..#.#.###.###...",
+		"...#..#.#...#.#.#...",
+		"..###.#.#.###.#.#...",
+		"....................",
+		"....................",
+		"....................",
+		"....................",
+		"....................",
+		"....................",
+        "...................."
     };
 
     const char terrain2[15][21] = {
-		"####..##############",
-		"#........##........#",
-		"#.#####..##...####.#",
-		"#........##........#",
+		"####################",
 		"#..................#",
 		"#..................#",
-		"....................",
-		"....................",
-		"....................",
-		"....................",
-		"#........##........#",
 		"#..................#",
-		"#.....#......#.....#",
-		"#.....#......#.....#",
-        "####..##############"
+		"#..................#",
+		"#..................#",
+		"#..................#",
+		"#..................#",
+		"#..................#",
+		"#..................#",
+		"#..................#",
+		"#..................#",
+		"#..................#",
+		"#..................#",
+		"####################"
     };
 
     const char terrain3[15][21] = {
@@ -479,5 +454,13 @@ void Jeu::initListTerrain()
         }
     }
 
+}
+
+void Jeu::changeSpeedSnake()
+{
+    if(itSpeed!=speedSnake.end())
+        ++itSpeed;
+    else
+        itSpeed = speedSnake.begin();
 }
 

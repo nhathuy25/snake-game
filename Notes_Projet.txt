@@ -51,7 +51,7 @@ Adding multiple terrains, trouble with changing between terrain.
 
 ### Update 16/4
 Finish adding terrains.
-Adding game over display and tap any button to restart the game/
+Adding game over display and tap any button to restart the game.
 
 
 

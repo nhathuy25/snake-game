@@ -2,6 +2,7 @@
 #define JEU_HPP
 
 #include<list>
+#include<vector>
 
 
 typedef enum {VIDE, MUR} Case;
@@ -64,13 +65,10 @@ class Jeu
     void ajoutMur();
     void suppressionMur();
 
-    // Function to verify is there a collision:
-    void collision();
-
     //Rewrite function for snake mouvement
     Position seBalader();
 
-    // ** FRUITS **
+    // ** FRUITS ** //
     //
     const Position &getFruite() const;
     Position genererRandomPosFruite();
@@ -81,18 +79,25 @@ class Jeu
     // Function to increase the size of snake
     void grandirSnake();
 
-    // ** SCORE **
+    // ** SCORE ** //
     int score;
 
-    // ** PLAYING ZONE - TERRAIN **
+    // ** PLAYING ZONE - TERRAIN ** //
     // By default, set up a list of 5 different terrains
     void initListTerrain();
 
     // Using an index to define current terrain used
     int id_terrain = 0;
 
+    // ** GAME OVER - GESTION DE LA FIN DU NIVEAU ** //
+    bool gameOver=false;
 
+    // ** SNAKE'S SPEED - GESTION DE LA VITESSE ** //
+    std::vector<int> speedSnake = {150, 300, 450, 600};
+    // Iterator to change between speed of the snake
+    std::vector<int>::const_iterator itSpeed = speedSnake.begin();
 
+    void changeSpeedSnake();
 };
 
 #endif

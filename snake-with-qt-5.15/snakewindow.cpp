@@ -54,9 +54,8 @@ SnakeWindow::SnakeWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent
     // Initializing the game
     jeu.init();
 
-    QTimer *timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &SnakeWindow::handleTimer);
-    timer->start(150);
+    timer->start(*jeu.itSpeed);
 
     // Adding button to randomly put a wall
     SnakeButton *btnAjout = new SnakeButton(this);
@@ -101,6 +100,16 @@ SnakeWindow::SnakeWindow(QWidget *pParent, Qt::WindowFlags flags):QFrame(pParent
     // Connect the button to it's active function
     connect(btnChangeTerrain, &QPushButton::clicked, this, &SnakeWindow::handleButtonChangeTerrain);
 
+    connect(timer, &QTimer::timeout, this, &SnakeWindow::gestionFinNiveau);
+
+    //------ Changing snake's speed button -------
+    SnakeButton *btnChangeSpeed = new SnakeButton(this);
+    btnChangeSpeed->setFixedSize(100,25);
+    btnChangeSpeed->setText("Change speed");
+    btnChangeSpeed->move(600,10);
+
+    connect(btnChangeSpeed, &QPushButton::clicked, this, &SnakeWindow::handleButtonChangeSpeed);
+
 }
 
 void SnakeWindow::paintEvent(QPaintEvent *)
@@ -138,7 +147,6 @@ void SnakeWindow::paintEvent(QPaintEvent *)
     int nbRandomFruite = jeu.nbRandomFruite;
     Position posFruite = jeu.getFruite();
     painter.drawPixmap(posFruite.x*largeurCase, posFruite.y*largeurCase+decalageY, pixmapFruite[nbRandomFruite]);
-
 }
 
 void SnakeWindow::keyPressEvent(QKeyEvent *event)
@@ -151,6 +159,10 @@ void SnakeWindow::keyPressEvent(QKeyEvent *event)
         jeu.setDirection(HAUT);
     else if (event->key()==Qt::Key_Down && jeu.getDirection()!=HAUT)
         jeu.setDirection(BAS);
+
+    if(jeu.gameOver==true)
+        restartGame();
+
     update();
 }
 
@@ -184,6 +196,49 @@ void SnakeWindow::handleButtonChangeTerrain()
         jeu.id_terrain++;
     else
         jeu.id_terrain=0;
-    jeu.init();
+    restartGame();
     update();
 }
+
+void SnakeWindow::handleButtonChangeSpeed()
+{
+    jeu.changeSpeedSnake();
+    update();
+}
+
+void SnakeWindow::gestionFinNiveau()
+{
+    if(jeu.gameOver)
+    {
+        this->timer->stop();
+        displayGameoverMessage();
+    }
+}
+
+void SnakeWindow::displayGameoverMessage()
+{
+    gameoverLabel->setText("GAME OVER!\nYour score: " + QString::number(jeu.score) + "\nPress any button!");
+    gameoverLabel->setAlignment(Qt::AlignCenter);
+    gameoverLabel->setFrameShape(QFrame::Panel);
+    gameoverLabel->setMargin(10);
+    gameoverLabel->setFrameShadow(QFrame::Sunken);
+    gameoverLabel->move(230, 250);
+
+    QFont gameoverFont;
+    gameoverFont.setPointSize(12);
+    gameoverLabel->setFont(gameoverFont);
+
+    if(jeu.gameOver)
+        gameoverLabel->show();
+    else
+        gameoverLabel->hide();
+}
+
+void SnakeWindow::restartGame()
+{
+    jeu.gameOver = false;
+    jeu.init();
+    displayGameoverMessage();
+    timer->start(*jeu.itSpeed);
+}
+

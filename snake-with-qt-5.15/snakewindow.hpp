@@ -18,8 +18,12 @@ class SnakeWindow : public QFrame
     // Score label:
     QLabel *scoreLabel = new QLabel(this);
 
+    // Timer
+    QTimer *timer = new QTimer(this);
+
   public:
     SnakeWindow(QWidget *pParent=nullptr, Qt::WindowFlags flags=Qt::WindowFlags());
+
 
   protected:
     void paintEvent(QPaintEvent *);
@@ -32,6 +36,19 @@ class SnakeWindow : public QFrame
 
     // Function to change between terrain and re-initialize the game afterward
     void handleButtonChangeTerrain();
+
+    void handleButtonChangeSpeed();
+
+
+    // Set up label to display game over message
+    QLabel *gameoverLabel = new QLabel(this);
+
+    // Function 'gestionFinNiveau' assign with timer to detect whether the game is over
+    void gestionFinNiveau();
+    // Function to display gameover message
+    void displayGameoverMessage();
+    // Function to restart the game
+    void restartGame();
 };
 
 class SnakeButton : public QPushButton
